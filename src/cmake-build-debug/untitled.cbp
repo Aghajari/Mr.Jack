@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="untitled"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\assets\;CMake Files\assets_cards\;CMake Files\assets_items\;CMake Files\assets_rain\;CMake Files\assets_round\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/Users/aghajari/CLionProjects/untitled/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/aghajari/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/aghajari/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/aghajari/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/aghajari/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/Users/aghajari/CLionProjects/untitled/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/aghajari/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/aghajari/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/aghajari/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/aghajari/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/Users/aghajari/CLionProjects/untitled/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/aghajari/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/aghajari/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/aghajari/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/aghajari/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="untitled">
+				<Option output="/Users/aghajari/CLionProjects/untitled/cmake-build-debug/untitled" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/aghajari/CLionProjects/untitled/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/SDL2.framework"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/SDL2_ttf.framework"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/SDL2_image.framework"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/SDL2_mixer.framework"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/12.0.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/aghajari/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 untitled"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/aghajari/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/aghajari/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/aghajari/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="untitled/fast">
+				<Option output="/Users/aghajari/CLionProjects/untitled/cmake-build-debug/untitled" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/aghajari/CLionProjects/untitled/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/SDL2.framework"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/SDL2_ttf.framework"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/SDL2_image.framework"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/SDL2_mixer.framework"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/12.0.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/aghajari/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 untitled/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/aghajari/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/aghajari/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/aghajari/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/audio/audio.c">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/audio/audio.h">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/characters/characters.c">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/characters/characters.h">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/graphic/GUI_gravity.h">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/graphic/GUI_init.c">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/graphic/GUI_init.h">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/graphic/MrJack_Map.c">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/graphic/MrJack_Map.h">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/linked_list/linked_list.c">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/linked_list/linked_list.h">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/main.c">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/pages/start_game.c">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/pages/start_jack.c">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/pages/start_map.c">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/pages/starter.c">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/pages/starter.h">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets/.DS_Store">
+			<Option virtualFolder="CMake Files\assets\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets/FreeSans.ttf">
+			<Option virtualFolder="CMake Files\assets\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets/bg.png">
+			<Option virtualFolder="CMake Files\assets\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets/characters.png">
+			<Option virtualFolder="CMake Files\assets\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets/clight.png">
+			<Option virtualFolder="CMake Files\assets\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets/cover.jpg">
+			<Option virtualFolder="CMake Files\assets\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets/detective.png">
+			<Option virtualFolder="CMake Files\assets\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets/detective_hover.png">
+			<Option virtualFolder="CMake Files\assets\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets/detective_selected.png">
+			<Option virtualFolder="CMake Files\assets\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets/gamepad.png">
+			<Option virtualFolder="CMake Files\assets\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets/img.png">
+			<Option virtualFolder="CMake Files\assets\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets/map.jpg">
+			<Option virtualFolder="CMake Files\assets\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets/mr_jack.png">
+			<Option virtualFolder="CMake Files\assets\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets/mr_jack_hover.png">
+			<Option virtualFolder="CMake Files\assets\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets/mr_jack_selected.png">
+			<Option virtualFolder="CMake Files\assets\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets/next.png">
+			<Option virtualFolder="CMake Files\assets\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets/rain.wav">
+			<Option virtualFolder="CMake Files\assets\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets/red_card.png">
+			<Option virtualFolder="CMake Files\assets\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets/theme.wav">
+			<Option virtualFolder="CMake Files\assets\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets/thunder.wav">
+			<Option virtualFolder="CMake Files\assets\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets/unseen.png">
+			<Option virtualFolder="CMake Files\assets\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/c1.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/c2.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/c3.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/c4.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/c5.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/c6.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/c7.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/c8.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/cs1.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/cs2.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/cs3.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/cs4.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/cs5.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/cs6.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/cs7.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/cs8.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/cu1.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/cu2.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/cu3.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/cu4.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/cu5.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/cu6.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/cu7.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/cu8.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/i1.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/i2.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/i3.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/i4.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/i5.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/i6.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/i7.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/i8.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/m1.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/m12.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/m2.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/m22.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/m3.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/m32.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/m4.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/m42.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/m5.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/m52.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/m6.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/m62.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/m7.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/m72.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/m8.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_cards/m82.png">
+			<Option virtualFolder="CMake Files\assets_cards\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_items/block.png">
+			<Option virtualFolder="CMake Files\assets_items\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_items/light.png">
+			<Option virtualFolder="CMake Files\assets_items\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_items/light1.png">
+			<Option virtualFolder="CMake Files\assets_items\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_items/light2.png">
+			<Option virtualFolder="CMake Files\assets_items\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_items/light3.png">
+			<Option virtualFolder="CMake Files\assets_items\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_items/light4.png">
+			<Option virtualFolder="CMake Files\assets_items\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_items/way.png">
+			<Option virtualFolder="CMake Files\assets_items\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_rain/0.png">
+			<Option virtualFolder="CMake Files\assets_rain\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_rain/1.png">
+			<Option virtualFolder="CMake Files\assets_rain\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_rain/10.png">
+			<Option virtualFolder="CMake Files\assets_rain\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_rain/11.png">
+			<Option virtualFolder="CMake Files\assets_rain\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_rain/12.png">
+			<Option virtualFolder="CMake Files\assets_rain\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_rain/2.png">
+			<Option virtualFolder="CMake Files\assets_rain\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_rain/3.png">
+			<Option virtualFolder="CMake Files\assets_rain\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_rain/4.png">
+			<Option virtualFolder="CMake Files\assets_rain\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_rain/5.png">
+			<Option virtualFolder="CMake Files\assets_rain\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_rain/6.png">
+			<Option virtualFolder="CMake Files\assets_rain\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_rain/7.png">
+			<Option virtualFolder="CMake Files\assets_rain\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_rain/8.png">
+			<Option virtualFolder="CMake Files\assets_rain\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_rain/9.png">
+			<Option virtualFolder="CMake Files\assets_rain\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_round/round.png">
+			<Option virtualFolder="CMake Files\assets_round\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_round/round1.png">
+			<Option virtualFolder="CMake Files\assets_round\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_round/round1s.png">
+			<Option virtualFolder="CMake Files\assets_round\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_round/round2.png">
+			<Option virtualFolder="CMake Files\assets_round\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_round/round2s.png">
+			<Option virtualFolder="CMake Files\assets_round\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_round/round3.png">
+			<Option virtualFolder="CMake Files\assets_round\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_round/round3s.png">
+			<Option virtualFolder="CMake Files\assets_round\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_round/round4.png">
+			<Option virtualFolder="CMake Files\assets_round\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_round/round4s.png">
+			<Option virtualFolder="CMake Files\assets_round\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_round/round5.png">
+			<Option virtualFolder="CMake Files\assets_round\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_round/round5s.png">
+			<Option virtualFolder="CMake Files\assets_round\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_round/round6.png">
+			<Option virtualFolder="CMake Files\assets_round\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_round/round6s.png">
+			<Option virtualFolder="CMake Files\assets_round\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_round/round7.png">
+			<Option virtualFolder="CMake Files\assets_round\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_round/round7s.png">
+			<Option virtualFolder="CMake Files\assets_round\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_round/round8.png">
+			<Option virtualFolder="CMake Files\assets_round\"/>
+		</Unit>
+		<Unit filename="/Users/aghajari/CLionProjects/untitled/assets_round/round8s.png">
+			<Option virtualFolder="CMake Files\assets_round\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
