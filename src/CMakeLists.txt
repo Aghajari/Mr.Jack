@@ -20,7 +20,7 @@ add_executable(${PROJECT_NAME} main.c
         characters/characters.c
         pages/start_map.c
         graphic/MrJack_Map.h
-        graphic/MrJack_Map.c)
+        graphic/MrJack_Map.c gameplay/MrJack_Gameplay.h gameplay/MrJack_Gameplay.c characters/MissStealthy.c characters/InspecteurLestrade.c characters/inner_characters.h characters/JermyBert.c characters/JohnWatson.c characters/SherlockHolmes.c characters/JohnSmith.c characters/SergentGoodley.c characters/SirWilliamGull.c)
 
 file(GLOB ASSETS "assets/*.*" "assets_rain/*.*" "assets_cards/*.*" "assets_round/*.*" "assets_items/*.*")
 foreach( fname ${ASSETS} )

@@ -2,17 +2,15 @@
 // Created by AmirHossein Aghajari on 1/4/22.
 //
 
-#include <SDL2/SDL.h>
-#include <SDL2_ttf/SDL_ttf.h>
-#include <SDL2_image/SDL_image.h>
-#include <stdbool.h>
-#include "MrJack_Map.h"
+
+#include "../characters/characters.h"
 #include "GUI_init.h"
 #include "GUI_gravity.h"
+#include "MrJack_Map.h"
 
 #define WHITECHAPEL_LEN (5 + 7 + 6 + 6 + 7 + 8 + 8 + 8 + 7 + 6 + 6 + 7 + 5)
 #define mi map_items
-#define DEBUG_MAP 0
+//#define DEBUG_MAP 0
 
 #define connect(i, c1, c2, c3, c4, c5, c6) { \
 mi[i].connectedTo[0] = c1;                  \
@@ -25,11 +23,22 @@ mi[i].connectedTo[5] = c6;                  \
 
 Whitechapel map_items[WHITECHAPEL_LEN];
 MapElement lights[6], characters[8], blocks[2], wayBlocks[4];
+MRJACK_Character *selectedCharacter = NULL;
 
+bool canSwitch, abilityEnabled;
 float initialX;
+long long int ignoreTime = 0;
+
+MapUISettings uiSettings;
+
+MapUISettings * getMapUISettings() {
+    return &uiSettings;
+}
 
 void initLights();
+
 void initBlocks();
+
 void initCharacters();
 
 void fix_relative(int i, int h, int w2) {
@@ -46,21 +55,23 @@ void fix_relative(int i, int h, int w2) {
     mi[i].points[5].y = mi[i].points[0].y + h / 2;
 }
 
+void reset_selected_items() {
+    for (int i = 0; i < WHITECHAPEL_LEN; i++) {
+        mi[i].enabled = false;
+    }
+}
+
 void initializeMap(int x) {
+    canSwitch = true;
+    selectedCharacter = NULL;
     for (int i = 0; i < WHITECHAPEL_LEN; i++) {
         mi[i].enabled = mi[i].isHome = mi[i].isLight = mi[i].isTunnel = false;
     }
 
     initialX = (float) x;
-    SDL_Color color = {.r = 242, .g = 255, .b = 0, .a = 255};
 
     int h = 73, i0 = 0;
     for (int i = 0; i < 5; ++i) {
-#if DEBUG_MAP
-        mi[i0 + i].enabled = true;
-#endif
-        mi[i0 + i].color = color;
-
         mi[i0 + i].points[0].x = 40;
         mi[i0 + i].points[1].x = 80;
         mi[i0 + i].points[0].y = mi[i0 + i].points[1].y = 215 + (i * h) + i;
@@ -69,11 +80,6 @@ void initializeMap(int x) {
     i0 += 5;
 
     for (int i = 0; i < 7; ++i) {
-#if DEBUG_MAP
-        mi[i0 + i].enabled = true;
-#endif
-        mi[i0 + i].color = color;
-
         mi[i0 + i].points[0].x = 79 + 22;
         mi[i0 + i].points[1].x = 120 + 22;
         mi[i0 + i].points[0].y = mi[i0 + i].points[1].y = 103 + (i * h) + i;
@@ -82,11 +88,6 @@ void initializeMap(int x) {
     i0 += 7;
 
     for (int i = 0; i < 6; ++i) {
-#if DEBUG_MAP
-        mi[i0 + i].enabled = true;
-#endif
-        mi[i0 + i].color = color;
-
         mi[i0 + i].points[0].x = 162;
         mi[i0 + i].points[1].x = 162 + 40;
         mi[i0 + i].points[0].y = mi[i0 + i].points[1].y = 140 + (i * h) + i;
@@ -95,11 +96,6 @@ void initializeMap(int x) {
     i0 += 6;
 
     for (int i = 0; i < 6; ++i) {
-#if DEBUG_MAP
-        mi[i0 + i].enabled = true;
-#endif
-        mi[i0 + i].color = color;
-
         mi[i0 + i].points[0].x = 223;
         mi[i0 + i].points[1].x = 223 + 40;
         mi[i0 + i].points[0].y = mi[i0 + i].points[1].y = 103 + (i * h) + i;
@@ -108,11 +104,6 @@ void initializeMap(int x) {
     i0 += 6;
 
     for (int i = 0; i < 7; ++i) {
-#if DEBUG_MAP
-        mi[i0 + i].enabled = true;
-#endif
-        mi[i0 + i].color = color;
-
         mi[i0 + i].points[0].x = 284;
         mi[i0 + i].points[1].x = 284 + 40;
         mi[i0 + i].points[0].y = mi[i0 + i].points[1].y = 67 + (i * h) + i;
@@ -121,11 +112,6 @@ void initializeMap(int x) {
     i0 += 7;
 
     for (int i = 0; i < 8; ++i) {
-#if DEBUG_MAP
-        mi[i0 + i].enabled = true;
-#endif
-        mi[i0 + i].color = color;
-
         mi[i0 + i].points[0].x = 344;
         mi[i0 + i].points[1].x = 344 + 40;
         mi[i0 + i].points[0].y = mi[i0 + i].points[1].y = 30 + (i * h) + i;
@@ -134,11 +120,6 @@ void initializeMap(int x) {
     i0 += 8;
 
     for (int i = 0; i < 8; ++i) {
-#if DEBUG_MAP
-        mi[i0 + i].enabled = true;
-#endif
-        mi[i0 + i].color = color;
-
         mi[i0 + i].points[0].x = 404;
         mi[i0 + i].points[1].x = 404 + 40;
         mi[i0 + i].points[0].y = mi[i0 + i].points[1].y = 67 + (i * h) + i;
@@ -147,11 +128,6 @@ void initializeMap(int x) {
     i0 += 8;
 
     for (int i = 0; i < 8; ++i) {
-#if DEBUG_MAP
-        mi[i0 + i].enabled = true;
-#endif
-        mi[i0 + i].color = color;
-
         mi[i0 + i].points[0].x = 464;
         mi[i0 + i].points[1].x = 464 + 40;
         mi[i0 + i].points[0].y = mi[i0 + i].points[1].y = 104 + (i * h) + i;
@@ -160,11 +136,6 @@ void initializeMap(int x) {
     i0 += 8;
 
     for (int i = 0; i < 7; ++i) {
-#if DEBUG_MAP
-        mi[i0 + i].enabled = true;
-#endif
-        mi[i0 + i].color = color;
-
         mi[i0 + i].points[0].x = 524;
         mi[i0 + i].points[1].x = 524 + 40;
         mi[i0 + i].points[0].y = mi[i0 + i].points[1].y = 141 + (i * h) + i;
@@ -173,11 +144,6 @@ void initializeMap(int x) {
     i0 += 7;
 
     for (int i = 0; i < 6; ++i) {
-#if DEBUG_MAP
-        mi[i0 + i].enabled = true;
-#endif
-        mi[i0 + i].color = color;
-
         mi[i0 + i].points[0].x = 584;
         mi[i0 + i].points[1].x = 584 + 40;
         mi[i0 + i].points[0].y = mi[i0 + i].points[1].y = 177 + (i * h) + i;
@@ -186,11 +152,6 @@ void initializeMap(int x) {
     i0 += 6;
 
     for (int i = 0; i < 6; ++i) {
-#if DEBUG_MAP
-        mi[i0 + i].enabled = true;
-#endif
-        mi[i0 + i].color = color;
-
         mi[i0 + i].points[0].x = 645;
         mi[i0 + i].points[1].x = 645 + 40;
         mi[i0 + i].points[0].y = mi[i0 + i].points[1].y = 141 + (i * h) + i;
@@ -199,11 +160,6 @@ void initializeMap(int x) {
     i0 += 6;
 
     for (int i = 0; i < 7; ++i) {
-#if DEBUG_MAP
-        mi[i0 + i].enabled = true;
-#endif
-        mi[i0 + i].color = color;
-
         mi[i0 + i].points[0].x = 707;
         mi[i0 + i].points[1].x = 707 + 40;
         mi[i0 + i].points[0].y = mi[i0 + i].points[1].y = 104 + (i * h) + i;
@@ -212,11 +168,6 @@ void initializeMap(int x) {
     i0 += 7;
 
     for (int i = 0; i < 5; ++i) {
-#if DEBUG_MAP
-        mi[i0 + i].enabled = true;
-#endif
-        mi[i0 + i].color = color;
-
         mi[i0 + i].points[0].x = 766;
         mi[i0 + i].points[1].x = 766 + 40;
         mi[i0 + i].points[0].y = mi[i0 + i].points[1].y = 141 + (i * h) + i;
@@ -434,6 +385,8 @@ void initCharacters() {
     for (int i = 0; i < 8; ++i) {
         characters[i].rotation = 0;
         characters[i].visible = true;
+        for (int j = 0; j < 5; ++j)
+            characters[i].move[j] = -1;
         sprintf(characters[i].name, "m%d.png", i + 1);
     }
     characters[3].rotation = -30;
@@ -453,6 +406,43 @@ void render_item(MapElement *element, SDL_Renderer *r) {
     }
     SDL_FreeSurface(surface);
     SDL_DestroyTexture(t);
+}
+
+double interpolator(double t) {
+    return (cos((t + 1) * M_PI) / 2.0) + 0.5;
+}
+
+void fix_move_state(MapElement *element) {
+    if (element->move[0] != -1) {
+        bool connected = false;
+        for (int i = 0; i < 6; ++i) {
+            if (mi[element->selected].connectedTo[i] == element->move[0]) {
+                connected = true;
+                break;
+            }
+        }
+        int duration = connected ? 120 : 400;
+
+        long long int time = currentTime();
+        double scale = (double) (time - element->time) / (double) duration;
+        scale = fmax(0, fmin(scale, 1));
+
+        SDL_Rect start, end;
+        fillRectFromMap2(element->selected, &start, NULL);
+        fillRectFromMap2(element->move[0], &end, NULL);
+
+        double scale2 = interpolator(scale);
+        element->currentRect.x = start.x + (int) ((end.x - start.x) * scale2);
+        element->currentRect.y = start.y + (int) ((end.y - start.y) * scale2);
+        ignoreTime = element->time + duration + 20;
+
+        if (scale >= 1) {
+            element->time = time;
+            element->selected = element->move[0];
+            for (int i = 0; i < 4; ++i)
+                element->move[i] = element->move[i + 1];
+        }
+    }
 }
 
 void render_map(SDL_Renderer *r) {
@@ -496,12 +486,217 @@ void render_map(SDL_Renderer *r) {
         if (i < 6 && lights[i].visible)
             render_item(&lights[i], r);
 
-        render_item(&characters[i], r);
+        fix_move_state(&characters[i]);
+        if (selectedCharacter == NULL || i + 1 != selectedCharacter->id)
+            render_item(&characters[i], r);
     }
+    if (selectedCharacter != NULL)
+        render_item(&characters[selectedCharacter->id - 1], r);
+
     characterLight.currentRect.x = characters[3].currentRect.x - characters[3].currentRect.w * 1.5;
     characterLight.currentRect.y = characters[3].currentRect.y - characters[3].currentRect.h * 1.5;
     characterLight.currentRect.w = characters[3].currentRect.w * 4;
     characterLight.currentRect.h = characters[3].currentRect.h * 4;
     characterLight.rotation = characters[3].rotation;
     render_item(&characterLight, r);
+}
+
+void select_all(int index, int move, bool fromHome, bool detective) {
+    Whitechapel *whitechapel = &mi[index];
+
+    if (whitechapel->isHome || whitechapel->isLight) {
+        if (fromHome && move > 0) {
+            for (int i = 0; i < 6; ++i) {
+                if (whitechapel->connectedTo[i] != -1)
+                    select_all(whitechapel->connectedTo[i], move - 1, fromHome, detective);
+            }
+        }
+        return;
+    }
+
+    if (!whitechapel->enabled) {
+        bool isFilled;
+        for (int i = 0; i < 8; ++i) {
+            isFilled = characters[i].selected == index;
+            if (isFilled)
+                break;
+        }
+        if (isFilled && detective) {
+            whitechapel->color.r = 255;
+            whitechapel->color.g = 0;
+            whitechapel->color.b = 0;
+            whitechapel->color.a = 255;
+            whitechapel->enabled = true;
+        } else if (!isFilled) {
+            whitechapel->color.r = 242;
+            whitechapel->color.g = 255;
+            whitechapel->color.b = 0;
+            whitechapel->color.a = 255;
+            whitechapel->enabled = true;
+        }
+    }
+
+    if (move > 0) {
+        for (int i = 0; i < 6; ++i) {
+            if (whitechapel->connectedTo[i] != -1)
+                select_all(whitechapel->connectedTo[i], move - 1, fromHome, detective);
+        }
+
+        if (whitechapel->isTunnel && blocks[0].selected != index && blocks[1].selected != index) {
+            for (int i = 0; i < WHITECHAPEL_LEN; ++i) {
+                if (mi[i].isTunnel && blocks[0].selected != i && blocks[1].selected != i) {
+                    select_all(i, move - 1, fromHome, detective);
+                }
+            }
+        }
+    }
+}
+
+void select_whitechapel(int character, int move, bool fromHome, bool detective) {
+    int index = characters[character - 1].selected;
+    Whitechapel *whitechapel = &mi[index];
+    whitechapel->color.r = 0;
+    whitechapel->color.g = 255;
+    whitechapel->color.b = 0;
+    whitechapel->color.a = 255;
+    whitechapel->enabled = true;
+
+    for (int i = 0; i < 6; ++i) {
+        if (whitechapel->connectedTo[i] != -1)
+            select_all(whitechapel->connectedTo[i], move - 1, fromHome, detective);
+    }
+
+    if (whitechapel->isTunnel && blocks[0].selected != index && blocks[1].selected != index) {
+        for (int i = 0; i < WHITECHAPEL_LEN; ++i) {
+            if (mi[i].isTunnel && blocks[0].selected != i && blocks[1].selected != i) {
+                select_all(i, move - 1, fromHome, detective);
+            }
+        }
+    }
+}
+
+void select_character_map(MRJACK_Character *character, bool detective) {
+    selectedCharacter = character;
+    if (selectedCharacter != NULL) {
+        selectedCharacter->init(detective);
+        uiSettings.hint->text = selectedCharacter->desc;
+        uiSettings.title->text = selectedCharacter->name;
+        uiSettings.hint->obj.refresh = true;
+        uiSettings.title->obj.refresh = true;
+    }
+}
+
+MRJACK_Character *get_selected_character() {
+    return selectedCharacter;
+}
+
+void set_can_switch(bool enabled) {
+    canSwitch = enabled;
+}
+
+bool get_can_switch() {
+    return canSwitch;
+}
+
+void set_ability_enabled(bool enabled) {
+    abilityEnabled = enabled;
+}
+
+bool get_ability_enabled() {
+    return abilityEnabled;
+}
+
+int getEnabledWhitechapelInArea(int x1, int y1, int x2, int y2) {
+    for (int i = 0; i < WHITECHAPEL_LEN; ++i) {
+        Whitechapel *w = &mi[i];
+        if (w->enabled) {
+            if ((w->points[0].x + (int) initialX) <= x1 && w->points[0].y <= y1 && (w->points[1].x + (int) initialX) >= x1 && w->points[3].y >= y1) {
+                if ((w->points[0].x + (int) initialX) <= x2 && w->points[0].y <= y2 && (w->points[1].x + (int) initialX) >= x2 && w->points[3].y >= y2)
+                    return i;
+            }
+        }
+    }
+    return -1;
+}
+
+void find_best_move2(int move, bool fromHome, int start, int end, int index, int out[], int in[], int fill) {
+
+    if (index == end) {
+        in[fill] = end;
+        int len1 = 0, len2 = fill + 1;
+        for (int i = 0; i < 4; ++i) {
+            if (out[i] != -1)
+                len1++;
+            else
+                break;
+        }
+
+        if (len1 > len2 || len1 == 0)
+            for (int i = 0; i < 4; ++i)
+                out[i] = in[i];
+        return;
+    }
+
+    if (move == 0)
+        return;
+
+    Whitechapel *whitechapel = &mi[index];
+    if (move > 0) {
+        if (fromHome || (!whitechapel->isHome && !whitechapel->isLight)) {
+            for (int i = 0; i < 6; ++i) {
+                if (whitechapel->connectedTo[i] != -1) {
+                    int in_copy[4] = {in[0], in[1], in[2], in[3]};
+                    in_copy[fill] = index;
+                    find_best_move2( move - 1, fromHome, start, end, whitechapel->connectedTo[i], out, in_copy, fill + 1);
+                }
+            }
+        }
+
+        if (whitechapel->isTunnel && blocks[0].selected != index && blocks[1].selected != index) {
+            for (int i = 0; i < WHITECHAPEL_LEN; ++i) {
+                if (mi[i].isTunnel && blocks[0].selected != i && blocks[1].selected != i) {
+                    int in_copy[4] = {in[0], in[1], in[2], in[3]};
+                    in_copy[fill] = index;
+                    find_best_move2( move - 1, fromHome, start, end, i, out, in_copy, fill + 1);
+                }
+            }
+        }
+    }
+}
+
+void find_best_move(int move, bool fromHome, int start, int end, int out[]) {
+    Whitechapel *whitechapel = &mi[start];
+    int in[] = {-1, -1, -1, -1};
+    out[0] = out[1] = out[2] = out[3] = out[4] = -1;
+
+    for (int i = 0; i < 6; ++i) {
+        if (whitechapel->connectedTo[i] != -1)
+            find_best_move2(move - 1,  fromHome, start, end, whitechapel->connectedTo[i], out, in, 0);
+    }
+
+    if (whitechapel->isTunnel && blocks[0].selected != start && blocks[1].selected != start) {
+        for (int i = 0; i < WHITECHAPEL_LEN; ++i) {
+            if (mi[i].isTunnel && blocks[0].selected != i && blocks[1].selected != i) {
+                find_best_move2(move - 1,  fromHome, start, end, i, out, in, 0);
+            }
+        }
+    }
+}
+
+MapElement *getCharacterElement(int character){
+    return &characters[character - 1];
+}
+
+void moveCharacter(int x1, int y1, int x2, int y2, int move, bool fromHome){
+    long long int time = currentTime();
+    if (ignoreTime > time)
+        return;
+
+    int w = getEnabledWhitechapelInArea(x1, y1, x2, y2);
+    int start = getCharacterElement(selectedCharacter->id)->selected;
+    if (w != -1 && start != w) {
+        find_best_move(move, fromHome, start, w, getCharacterElement(selectedCharacter->id)->move);
+        getCharacterElement(selectedCharacter->id)->time = currentTime();
+        ignoreTime = time + 100;
+    }
 }

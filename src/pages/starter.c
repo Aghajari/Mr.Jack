@@ -3,9 +3,6 @@
 //
 
 #include "starter.h"
-#include <SDL2/SDL.h>
-#include <SDL2_ttf/SDL_ttf.h>
-#include <stdbool.h>
 #include "../graphic/GUI_init.h"
 #include "../graphic/GUI_gravity.h"
 

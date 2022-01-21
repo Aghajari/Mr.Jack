@@ -4,6 +4,10 @@
 
 #ifndef GUI_INIT_H
 #define GUI_INIT_H
+#include <SDL2/SDL.h>
+#include <SDL2_ttf/SDL_ttf.h>
+#include <SDL2_image/SDL_image.h>
+#include <stdbool.h>
 
 typedef struct {
     void *obj, *element;
@@ -21,6 +25,9 @@ typedef struct {
     int gravity;
     GUI_Event event;
     void (*clickListener)(const void *element);
+    void *texture, *surface;
+    int target;
+    bool refresh;
 } GUI_OBJECT;
 
 typedef struct GUI_Button {
@@ -105,9 +112,12 @@ void insert_fade_rect2(GUI_FadeRect *pnl, GUI_Panel *panel);
 
 GUI_Panel *create_panel();
 GUI_Panel *create_panel2(GUI_OBJECT object);
+void free_panel(GUI_Panel *pnl);
+void free_surface(GUI_OBJECT *o);
 
 long long currentTime();
 
 int render_fadein_image(GUI_FadeInImage *img, SDL_Renderer *r);
 int render_label(GUI_Label *lbl, SDL_Renderer *r);
+int render_image(GUI_Image *img, SDL_Renderer *r);
 #endif

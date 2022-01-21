@@ -3,9 +3,6 @@
 //
 
 #include "starter.h"
-#include <SDL2/SDL.h>
-#include <SDL2_ttf/SDL_ttf.h>
-#include <stdbool.h>
 #include "../graphic/GUI_init.h"
 #include "../graphic/GUI_gravity.h"
 #include "../audio/audio.h"
@@ -348,8 +345,8 @@ int start_game() {
 
     remove_element(pnl);
     remove_element(rain_pnl);
-    free(pnl);
-    free(rain_pnl);
+    free_panel(pnl);
+    free_panel(rain_pnl);
 
     int x, y;
     SDL_GetWindowPosition(window, &x, &y);

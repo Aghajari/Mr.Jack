@@ -3,13 +3,9 @@
 //
 
 #include "starter.h"
-#include <SDL2/SDL.h>
-#include <SDL2_ttf/SDL_ttf.h>
-#include <stdbool.h>
 #include "../graphic/GUI_init.h"
 #include "../graphic/GUI_gravity.h"
 #include "../characters/characters.h"
-
 
 #define SCREEN_WIDTH 1000
 #define SCREEN_HEIGHT 700
@@ -90,7 +86,7 @@ int start_jack(int player1, int player2, int x, int y) {
             .time = -1
     };
 
-    MRJACK_Character c;
+    MRJACK_Character *c;
     GUI_FadeInImage character = {
             .duration = 500,
             .obj = {
@@ -104,9 +100,11 @@ int start_jack(int player1, int player2, int x, int y) {
 
     while (!quit) {
         if (reveal && next.time == -1) {
-            c = findCharacter(rand() % CHARACTERS_COUNT + 1);
-            character.file = c.innocent;
-            lbl.text = c.name;
+            initialize_characters();
+            c = pick_character();
+            character.file = c->innocent;
+            lbl.text = c->name;
+            lbl.obj.refresh = true;
 
             insert_fadein_image2(&next, pnl);
             insert_fadein_image2(&character, pnl);
@@ -132,11 +130,12 @@ int start_jack(int player1, int player2, int x, int y) {
         SDL_RenderPresent(renderer);
     }
 
+    free_panel(pnl);
     int x2, y2;
     SDL_GetWindowPosition(window, &x2, &y2);
 
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
 
-    return start_map(player1, player2, x2, y2, c.id);
+    return start_map(player1, player2, x2, y2, c->id);
 }

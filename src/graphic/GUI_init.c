@@ -2,10 +2,6 @@
 // Created by AmirHossein Aghajari on 12/30/21.
 //
 
-#include <SDL2/SDL.h>
-#include <SDL2_ttf/SDL_ttf.h>
-#include <SDL2_image/SDL_image.h>
-#include <stdbool.h>
 #include <sys/time.h>
 #include "GUI_init.h"
 #include "GUI_gravity.h"
@@ -62,6 +58,14 @@ void draw_rain(SDL_Renderer *r, struct LinkedListNode *l) {
 
         if (obj != NULL && obj->render != NULL && obj->element != NULL) {
             if (obj->render(obj->element, r)) {
+                if (obj->obj != NULL) {
+                    GUI_OBJECT *o = obj->obj;
+                    if (o->surface != NULL)
+                        SDL_FreeSurface(o->surface);
+                    if (o->texture != NULL)
+                        SDL_DestroyTexture(o->texture);
+                }
+
                 free(obj->element);
                 obj->element = NULL;
             }
@@ -107,6 +111,7 @@ int event(GUI_OBJECT *obj, const SDL_Event *ev) {
         obj->event.pressing = false;
     }
     obj->event.hover = is_in_rect(ev, obj->rect);
+    return 0;
 }
 
 bool is_color_ready(SDL_Color *color) {
@@ -137,6 +142,7 @@ int render_button(GUI_Button *btn, SDL_Renderer *r) {
     SDL_SetRenderDrawColor(r, color->r, color->g, color->b, color->a);
     SDL_RenderFillRect(r, &btn->obj.rect);
     checkClick(&btn->obj, btn);
+    return 0;
 }
 
 void insert_button(GUI_Button *button) {
@@ -144,6 +150,7 @@ void insert_button(GUI_Button *button) {
 }
 
 void insert_button2(GUI_Button *button, GUI_Panel *panel) {
+    button->obj.texture = button->obj.surface = NULL;
     GUI_OBJECT_POINTER *pointer = malloc(sizeof(GUI_OBJECT_POINTER));
     pointer->obj = &button->obj;
     pointer->element = button;
@@ -206,16 +213,27 @@ void fix_rect(SDL_Rect *src, SDL_Rect *dest, int w, int h, int gravity) {
 }
 
 int render_label(GUI_Label *lbl, SDL_Renderer *r) {
-    SDL_Surface *surface = TTF_RenderText_Solid(lbl->font, lbl->text, *(find_color(&lbl->obj)));
-    SDL_Texture *t = SDL_CreateTextureFromSurface(r, surface);
+    if (lbl->obj.refresh) {
+        lbl->obj.refresh = false;
+        free_surface(&lbl->obj);
+    }
+
+    if (lbl->obj.surface == NULL) {
+        lbl->obj.surface = TTF_RenderText_Blended_Wrapped(lbl->font, lbl->text, *(find_color(&lbl->obj)), lbl->obj.rect.w - 8);
+        lbl->obj.texture = SDL_CreateTextureFromSurface(r, lbl->obj.surface);
+    }
 
     SDL_Rect rect;
-    fix_rect(&lbl->obj.rect, &rect, surface->w, surface->h, lbl->obj.gravity);
+    fix_rect(&lbl->obj.rect, &rect,
+             ((SDL_Surface *) lbl->obj.surface)->w,
+             ((SDL_Surface *) lbl->obj.surface)->h,
+             lbl->obj.gravity);
 
-    SDL_RenderCopy(r, t, NULL, &rect);
-    SDL_FreeSurface(surface);
-    SDL_DestroyTexture(t);
+    SDL_RenderCopy(r, lbl->obj.texture, NULL, &rect);
+    //SDL_FreeSurface(surface);
+    //SDL_DestroyTexture(t);
     checkClick(&lbl->obj, lbl);
+    return 0;
 }
 
 void insert_label(GUI_Label *label) {
@@ -223,6 +241,7 @@ void insert_label(GUI_Label *label) {
 }
 
 void insert_label2(GUI_Label *label, GUI_Panel *panel) {
+    label->obj.texture = label->obj.surface = NULL;
     GUI_OBJECT_POINTER *pointer = malloc(sizeof(GUI_OBJECT_POINTER));
     pointer->obj = &label->obj;
     pointer->element = label;
@@ -284,6 +303,7 @@ int render_fade_label(GUI_FadeLabel *lbl, SDL_Renderer *r) {
 
     if (shouldRemove)
         remove_element(lbl);
+    return 0;
 }
 
 void insert_fade_label(GUI_FadeLabel *label) {
@@ -291,6 +311,7 @@ void insert_fade_label(GUI_FadeLabel *label) {
 }
 
 void insert_fade_label2(GUI_FadeLabel *label, GUI_Panel *panel) {
+    label->obj.texture = label->obj.surface = NULL;
     label->showing = true;
     label->time = currentTime();
 
@@ -306,17 +327,28 @@ void insert_fade_label2(GUI_FadeLabel *label, GUI_Panel *panel) {
 // Image
 
 int render_image(GUI_Image *img, SDL_Renderer *r) {
-    IMG_Init(IMG_INIT_JPG);
-    SDL_Surface *surface = IMG_Load(img->file);
-    SDL_Texture *t = SDL_CreateTextureFromSurface(r, surface);
+    if (img->obj.refresh) {
+        img->obj.refresh = false;
+        free_surface(&img->obj);
+    }
+
+    if (img->obj.texture == NULL) {
+        IMG_Init(IMG_INIT_JPG);
+        SDL_Surface *surface = IMG_Load(img->file);
+        SDL_Texture *t = SDL_CreateTextureFromSurface(r, surface);
+        img->obj.surface = surface;
+        img->obj.texture = t;
+    }
 
     SDL_Rect rect;
-    fix_rect(&img->obj.rect, &rect, surface->w, surface->h, img->obj.gravity);
+    fix_rect(&img->obj.rect, &rect, ((SDL_Surface *) img->obj.surface)->w, ((SDL_Surface *) img->obj.surface)->h,
+             img->obj.gravity);
 
-    SDL_RenderCopy(r, t, NULL, &rect);
-    SDL_FreeSurface(surface);
-    SDL_DestroyTexture(t);
+    SDL_RenderCopy(r, img->obj.texture, NULL, &rect);
+    //SDL_FreeSurface(surface);
+    //SDL_DestroyTexture(t);
     checkClick(&img->obj, img);
+    return 0;
 }
 
 void insert_image(GUI_Image *img) {
@@ -324,6 +356,7 @@ void insert_image(GUI_Image *img) {
 }
 
 void insert_image2(GUI_Image *img, GUI_Panel *panel) {
+    img->obj.texture = img->obj.surface = NULL;
     GUI_OBJECT_POINTER *pointer = malloc(sizeof(GUI_OBJECT_POINTER));
     pointer->obj = &img->obj;
     pointer->element = img;
@@ -336,15 +369,31 @@ void insert_image2(GUI_Image *img, GUI_Panel *panel) {
 // Image FadeIn
 
 int render_fadein_image(GUI_FadeInImage *img, SDL_Renderer *r) {
+    if (img->obj.refresh) {
+        img->obj.refresh = false;
+        free_surface(&img->obj);
+    }
+
     IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
-    SDL_Surface *surface = IMG_Load(
+    SDL_Surface *surface = img->obj.surface != NULL ? img->obj.surface : IMG_Load(
             (img->selected && img->selectedFile != NULL) ? img->selectedFile :
             ((img->obj.event.hover && img->hoverFile != NULL) ? img->hoverFile : img->file));
+    if (img->selectedFile == NULL && img->hoverFile == NULL && img->obj.surface == NULL) {
+        img->obj.surface = surface;
+    }
 
     long long time = currentTime();
     long passed = time - img->time;
 
-    SDL_Texture *t = SDL_CreateTextureFromSurface(r, surface);
+    SDL_Texture *t;
+    if (img->obj.texture == NULL) {
+        t = SDL_CreateTextureFromSurface(r, surface);
+        if (img->obj.surface != NULL)
+            img->obj.texture = t;
+    } else {
+        t = img->obj.texture;
+    }
+
     int a = 255;
     if (passed < img->duration) {
         a = (int) (fmin(255, 255 * ((double) passed / img->duration)));
@@ -356,8 +405,11 @@ int render_fadein_image(GUI_FadeInImage *img, SDL_Renderer *r) {
 
     SDL_SetRenderDrawBlendMode(r, SDL_BLENDMODE_BLEND);
     SDL_RenderCopy(r, t, NULL, &rect);
-    SDL_FreeSurface(surface);
-    SDL_DestroyTexture(t);
+
+    if (img->obj.surface == NULL) {
+        SDL_FreeSurface(surface);
+        SDL_DestroyTexture(t);
+    }
 
     if (a != 255 && img->obj.gravity == GRAVITY_FILL) {
         SDL_SetRenderDrawColor(r, 0, 0, 0, 255 - a);
@@ -365,6 +417,7 @@ int render_fadein_image(GUI_FadeInImage *img, SDL_Renderer *r) {
         SDL_RenderFillRect(r, &img->obj.rect);
     }
     checkClick(&img->obj, img);
+    return 0;
 }
 
 void insert_fadein_image(GUI_FadeInImage *img) {
@@ -372,6 +425,7 @@ void insert_fadein_image(GUI_FadeInImage *img) {
 }
 
 void insert_fadein_image2(GUI_FadeInImage *img, GUI_Panel *panel) {
+    img->obj.texture = img->obj.surface = NULL;
     img->time = currentTime();
 
     GUI_OBJECT_POINTER *pointer = malloc(sizeof(GUI_OBJECT_POINTER));
@@ -389,10 +443,10 @@ int render_rain(GUI_RainImage *img, SDL_Renderer *r) {
     if (img == NULL)
         return 0;
 
-    IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
-    char name[10];
-    sprintf(name, "%d.png", img->type);
-    SDL_Surface *surface = IMG_Load(name);
+    if (img->obj.refresh) {
+        img->obj.refresh = false;
+        free_surface(&img->obj);
+    }
 
     long long time = currentTime();
     bool shouldRemove = false;
@@ -414,15 +468,24 @@ int render_rain(GUI_RainImage *img, SDL_Renderer *r) {
             shouldRemove = passed >= img->duration;
         }
     }
-    SDL_SetSurfaceAlphaMod(surface, alpha);
 
+    if (img->obj.surface == NULL) {
+        IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
+        char name[10];
+        sprintf(name, "%d.png", img->type);
+        img->obj.surface = IMG_Load(name);
+    }
+
+    if (img->obj.texture == NULL) {
+        img->obj.texture = SDL_CreateTextureFromSurface(r, img->obj.surface);
+    }
+    SDL_SetTextureAlphaMod(img->obj.texture, alpha);
     SDL_SetRenderDrawBlendMode(r, SDL_BLENDMODE_BLEND);
-    SDL_Texture *t = SDL_CreateTextureFromSurface(r, surface);
     //fix_rect(&img->obj.rect, &rect, surface->w / 4, surface->h / 4, img->obj.gravity);
 
-    SDL_RenderCopy(r, t, NULL, &img->obj.rect);
-    SDL_FreeSurface(surface);
-    SDL_DestroyTexture(t);
+    SDL_RenderCopy(r, img->obj.texture, NULL, &img->obj.rect);
+    //SDL_FreeSurface(surface);
+    //SDL_DestroyTexture(t);
     //checkClick(&img->obj, img);
 
     return shouldRemove;
@@ -433,6 +496,7 @@ void insert_rain(GUI_RainImage *img) {
 }
 
 void insert_rain2(GUI_RainImage *img, GUI_Panel *panel) {
+    img->obj.texture = img->obj.surface = NULL;
     img->time = currentTime();
     img->showing = true;
 
@@ -488,6 +552,7 @@ void insert_fade_rect(GUI_FadeRect *rect) {
 }
 
 void insert_fade_rect2(GUI_FadeRect *rect, GUI_Panel *panel) {
+    rect->obj.texture = rect->obj.surface = NULL;
     rect->time = currentTime();
     rect->showing = true;
 
@@ -508,6 +573,7 @@ void insert_fade_rect2(GUI_FadeRect *rect, GUI_Panel *panel) {
 int event_panel(GUI_Panel *pnl, const SDL_Event *ev) {
     event(&pnl->obj, ev);
     event_for_all2(ev, pnl->childs);
+    return 0;
 }
 
 int render_panel(GUI_Panel *pnl, SDL_Renderer *r) {
@@ -517,6 +583,7 @@ int render_panel(GUI_Panel *pnl, SDL_Renderer *r) {
     SDL_RenderFillRect(r, &pnl->obj.rect);
     draw_for_all2(r, pnl->childs);
     checkClick(&pnl->obj, pnl);
+    return 0;
 }
 
 GUI_Panel *create_panel() {
@@ -525,6 +592,7 @@ GUI_Panel *create_panel() {
 
 GUI_Panel *create_panel2(GUI_OBJECT object) {
     GUI_Panel *pnl = malloc(sizeof(GUI_Panel));
+    pnl->obj.surface = pnl->obj.texture = NULL;
     pnl->obj.color = object.color;
     pnl->obj.pressingColor = object.pressingColor;
     pnl->obj.hoverColor = object.hoverColor;
@@ -544,10 +612,43 @@ void insert_panel(GUI_Panel *pnl) {
 
 void insert_panel2(GUI_Panel *pnl, GUI_Panel *panel) {
     GUI_OBJECT_POINTER *pointer = malloc(sizeof(GUI_OBJECT_POINTER));
+    pnl->obj.surface = pnl->obj.texture = NULL;
     pointer->obj = &pnl->obj;
     pointer->element = pnl;
     pointer->event = event_panel;
     pointer->render = render_panel;
     pointer->isPanel = true;
     linked_list_append(linked_list_new(pointer), panel == NULL ? list : panel->childs);
+}
+
+void free_panel(GUI_Panel *pnl) {
+    for (struct LinkedListNode *cur = pnl->childs; cur != NULL;) {
+        if (cur->data != NULL) {
+            GUI_OBJECT_POINTER *obj = cur->data;
+            if (obj->obj != NULL && obj->element != NULL) {
+                GUI_OBJECT *o = obj->obj;
+                if (o->surface != NULL)
+                    SDL_FreeSurface(o->surface);
+                if (o->texture != NULL)
+                    SDL_DestroyTexture(o->texture);
+                if (obj->isPanel)
+                    free_panel(obj->element);
+            }
+        }
+        free(cur->data);
+        struct LinkedListNode *tmp = cur;
+        cur = cur->next;
+        free(tmp);
+    }
+    free(pnl);
+}
+
+void free_surface(GUI_OBJECT *o) {
+    if (o->surface != NULL)
+        SDL_FreeSurface(o->surface);
+    if (o->texture != NULL)
+        SDL_DestroyTexture(o->texture);
+    o->surface = NULL;
+    o->texture = NULL;
+    o->refresh = false;
 }
