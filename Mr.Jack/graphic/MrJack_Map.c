@@ -9,7 +9,8 @@
 #include "MrJack_Map.h"
 #include "../pages/starter.h"
 
-#define WHITECHAPEL_LEN (5 + 7 + 6 + 6 + 7 + 8 + 8 + 8 + 7 + 6 + 6 + 7 + 5)
+// 5 + 7 + 6 + 6 + 7 + 8 + 8 + 8 + 7 + 6 + 6 + 7 + 5 = 86
+#define WHITECHAPEL_LEN (86)
 #define mi map_items
 //#define DEBUG_MAP 0
 
@@ -63,7 +64,6 @@ void reset_selected_items() {
 }
 
 void initializeMap(int x) {
-    canSwitch = true;
     selectedCharacter = NULL;
     for (int i = 0; i < WHITECHAPEL_LEN; i++) {
         mi[i].enabled = mi[i].isHome = mi[i].isLight = mi[i].isTunnel = false;
@@ -72,109 +72,32 @@ void initializeMap(int x) {
     initialX = (float) x;
 
     int h = 73, i0 = 0;
-    for (int i = 0; i < 5; ++i) {
-        mi[i0 + i].points[0].x = 40;
-        mi[i0 + i].points[1].x = 80;
-        mi[i0 + i].points[0].y = mi[i0 + i].points[1].y = 215 + (i * h) + i;
-        fix_relative(i0 + i, h, 22);
-    }
-    i0 += 5;
+    int mapInit[13][5] = {
+            //ROWS, X0, X1, Y0, WIDTH
+            {5, 40,  80,  215, 22},
+            {7, 101, 142, 103, 20},
+            {6, 162, 202, 140, 20},
+            {6, 223, 263, 103, 20},
+            {7, 284, 324, 67,  20},
+            {8, 344, 384, 30,  20},
+            {8, 404, 444, 67,  20},
+            {8, 464, 504, 104, 20},
+            {7, 524, 564, 141, 20},
+            {6, 584, 624, 177, 20},
+            {6, 645, 685, 141, 20},
+            {7, 707, 747, 104, 20},
+            {5, 766, 806, 141, 20},
+    };
 
-    for (int i = 0; i < 7; ++i) {
-        mi[i0 + i].points[0].x = 79 + 22;
-        mi[i0 + i].points[1].x = 120 + 22;
-        mi[i0 + i].points[0].y = mi[i0 + i].points[1].y = 103 + (i * h) + i;
-        fix_relative(i0 + i, h, 20);
+    for (int k = 0; k < 13; ++k) {
+        for (int i = 0; i < mapInit[k][0]; ++i) {
+            mi[i0 + i].points[0].x = mapInit[k][1];
+            mi[i0 + i].points[1].x = mapInit[k][2];
+            mi[i0 + i].points[0].y = mi[i0 + i].points[1].y = mapInit[k][3] + (i * h) + i;
+            fix_relative(i0 + i, h, mapInit[k][4]);
+        }
+        i0 += mapInit[k][0];
     }
-    i0 += 7;
-
-    for (int i = 0; i < 6; ++i) {
-        mi[i0 + i].points[0].x = 162;
-        mi[i0 + i].points[1].x = 162 + 40;
-        mi[i0 + i].points[0].y = mi[i0 + i].points[1].y = 140 + (i * h) + i;
-        fix_relative(i0 + i, h, 20);
-    }
-    i0 += 6;
-
-    for (int i = 0; i < 6; ++i) {
-        mi[i0 + i].points[0].x = 223;
-        mi[i0 + i].points[1].x = 223 + 40;
-        mi[i0 + i].points[0].y = mi[i0 + i].points[1].y = 103 + (i * h) + i;
-        fix_relative(i0 + i, h, 20);
-    }
-    i0 += 6;
-
-    for (int i = 0; i < 7; ++i) {
-        mi[i0 + i].points[0].x = 284;
-        mi[i0 + i].points[1].x = 284 + 40;
-        mi[i0 + i].points[0].y = mi[i0 + i].points[1].y = 67 + (i * h) + i;
-        fix_relative(i0 + i, h, 20);
-    }
-    i0 += 7;
-
-    for (int i = 0; i < 8; ++i) {
-        mi[i0 + i].points[0].x = 344;
-        mi[i0 + i].points[1].x = 344 + 40;
-        mi[i0 + i].points[0].y = mi[i0 + i].points[1].y = 30 + (i * h) + i;
-        fix_relative(i0 + i, h, 20);
-    }
-    i0 += 8;
-
-    for (int i = 0; i < 8; ++i) {
-        mi[i0 + i].points[0].x = 404;
-        mi[i0 + i].points[1].x = 404 + 40;
-        mi[i0 + i].points[0].y = mi[i0 + i].points[1].y = 67 + (i * h) + i;
-        fix_relative(i0 + i, h, 20);
-    }
-    i0 += 8;
-
-    for (int i = 0; i < 8; ++i) {
-        mi[i0 + i].points[0].x = 464;
-        mi[i0 + i].points[1].x = 464 + 40;
-        mi[i0 + i].points[0].y = mi[i0 + i].points[1].y = 104 + (i * h) + i;
-        fix_relative(i0 + i, h, 20);
-    }
-    i0 += 8;
-
-    for (int i = 0; i < 7; ++i) {
-        mi[i0 + i].points[0].x = 524;
-        mi[i0 + i].points[1].x = 524 + 40;
-        mi[i0 + i].points[0].y = mi[i0 + i].points[1].y = 141 + (i * h) + i;
-        fix_relative(i0 + i, h, 20);
-    }
-    i0 += 7;
-
-    for (int i = 0; i < 6; ++i) {
-        mi[i0 + i].points[0].x = 584;
-        mi[i0 + i].points[1].x = 584 + 40;
-        mi[i0 + i].points[0].y = mi[i0 + i].points[1].y = 177 + (i * h) + i;
-        fix_relative(i0 + i, h, 20);
-    }
-    i0 += 6;
-
-    for (int i = 0; i < 6; ++i) {
-        mi[i0 + i].points[0].x = 645;
-        mi[i0 + i].points[1].x = 645 + 40;
-        mi[i0 + i].points[0].y = mi[i0 + i].points[1].y = 141 + (i * h) + i;
-        fix_relative(i0 + i, h, 20);
-    }
-    i0 += 6;
-
-    for (int i = 0; i < 7; ++i) {
-        mi[i0 + i].points[0].x = 707;
-        mi[i0 + i].points[1].x = 707 + 40;
-        mi[i0 + i].points[0].y = mi[i0 + i].points[1].y = 104 + (i * h) + i;
-        fix_relative(i0 + i, h, 20);
-    }
-    i0 += 7;
-
-    for (int i = 0; i < 5; ++i) {
-        mi[i0 + i].points[0].x = 766;
-        mi[i0 + i].points[1].x = 766 + 40;
-        mi[i0 + i].points[0].y = mi[i0 + i].points[1].y = 141 + (i * h) + i;
-        fix_relative(i0 + i, h, 20);
-    }
-    i0 += 5;
 
     mi[6].isTunnel = mi[11].isTunnel
             = mi[15].isTunnel = mi[31].isTunnel
@@ -896,7 +819,7 @@ void moveCharacter(int x1, int y1, int x2, int y2, int move, bool fromHome) {
                 else
                     break;
             }
-            if (len1 >= move) {
+            if (len1 >= move || len1 == 0) {
                 out[0] = out[1] = out[2] = out[3] = out[4] = -1;
                 return;
             } else {
@@ -1108,7 +1031,7 @@ bool isCharacterVisible(int character) {
         if (mi[johnWatson->selected].connectedTo[n] != -1
             && (mi[johnWatson->selected].connectedTo[n] == selected
                 || (!mi[mi[johnWatson->selected].connectedTo[n]].isHome
-                && mi[mi[johnWatson->selected].connectedTo[n]].connectedTo[n] == selected)))
+                    && mi[mi[johnWatson->selected].connectedTo[n]].connectedTo[n] == selected)))
             return true;
     }
     return false;
@@ -1133,7 +1056,7 @@ int getFinalCharacterSelectedIndex(int c) {
     return getFinalElementSelectedIndex(getCharacterElement(c));
 }
 
-void safe_character(int id){
+void safe_character(int id) {
     if (getMapUISettings()->jackId != id) {
         getCharacterElement(id)->isSafe = true;
         strcpy(getCharacterElement(id)->name, findCharacter(id)->circleSafe);

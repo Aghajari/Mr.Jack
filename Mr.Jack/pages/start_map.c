@@ -41,7 +41,7 @@ GUI_FadeInImage select_card = {
 char game_over_icon[25];
 bool game_over = false;
 GUI_FadeInImage game_over_image = {
-        .duration = 700,
+        .duration = 1500,
         .file = game_over_icon,
         .obj = {
                 .gravity = GRAVITY_FILL2,
