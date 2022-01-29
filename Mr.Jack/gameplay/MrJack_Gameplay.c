@@ -19,7 +19,7 @@ int gameplay_whosTurn(int player1, int player2, int round, int turn, bool *detec
         }
     }
     *detective = side == 1;
-    getMapUISettings()->detective = detective;
+    getMapUISettings()->detective = *detective;
 
     if (player1 == side) {
         if (player2 == side) {
@@ -82,7 +82,7 @@ int bfs(int start, int target, int *out, bool tunnel, bool home) {
             }
         }
 
-        if (tunnel) {
+        if (tunnel && !findPath) {
             if (whitechapel->isTunnel && find_block_selected(0) != item->value &&
                 find_block_selected(1) != item->value) {
                 for (int i = 0; i < get_whitechapel_len(); ++i) {
@@ -249,40 +249,11 @@ void find_strategy(int move, bool fromHome, struct Strategy *strategies) {
 }
 
 bool isCharacterVisibleForJohn(int character, int rotation) {
-    int selected = getFinalCharacterSelectedIndex(character);\
+    int selected = getFinalCharacterSelectedIndex(character);
 
     if (character != 4) {
         MapElement *johnWatson = getCharacterElement(4);
-        int n;
-        switch (rotation) {
-            case -30:
-                n = 4;
-                break;
-            case -90:
-                n = 0;
-                break;
-            case -150:
-                n = 2;
-                break;
-            case -210:
-                n = 3;
-                break;
-            case -270:
-                n = 1;
-                break;
-            case -330:
-                n = 5;
-                break;
-            default:
-                n = -1;
-                break;
-        }
-
-        if (get_whitechapel(johnWatson->selected)->connectedTo[n] != -1
-            && (get_whitechapel(johnWatson->selected)->connectedTo[n] == selected
-                || (!get_whitechapel(get_whitechapel(johnWatson->selected)->connectedTo[n])->isHome
-                && get_whitechapel(get_whitechapel(johnWatson->selected)->connectedTo[n])->connectedTo[n] == selected)))
-            return true;
+        return isVisibleForWatson(rotation, getFinalElementSelectedIndex(johnWatson), selected);
     }
     return false;
 }
@@ -312,36 +283,7 @@ bool isCharacterVisibleInStrategy(int character, struct Strategy *strategy) {
 
     if (character != 4) {
         MapElement *johnWatson = getCharacterElement(4);
-        int n;
-        switch (johnWatson->rotation) {
-            case -30:
-                n = 4;
-                break;
-            case -90:
-                n = 0;
-                break;
-            case -150:
-                n = 2;
-                break;
-            case -210:
-                n = 3;
-                break;
-            case -270:
-                n = 1;
-                break;
-            case -330:
-                n = 5;
-                break;
-            default:
-                n = -1;
-                break;
-        }
-
-        if (get_whitechapel(johnWatson->selected)->connectedTo[n] != -1
-            && (get_whitechapel(johnWatson->selected)->connectedTo[n] == selected
-                || (!get_whitechapel(get_whitechapel(johnWatson->selected)->connectedTo[n])->isHome
-                        && get_whitechapel(get_whitechapel(johnWatson->selected)->connectedTo[n])->connectedTo[n] == selected)))
-            return true;
+        return isVisibleForWatson(johnWatson->rotation, getFinalElementSelectedIndex(johnWatson), selected);
     }
     return false;
 }

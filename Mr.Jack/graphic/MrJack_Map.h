@@ -76,6 +76,7 @@ void fillRectFromMap2(int i, SDL_Rect *rect, MapElement *element);
 int can_jack_leave_the_district();
 void safe_character(int id);
 bool isFilledWithCharacter(int w, int c);
+bool isVisibleForWatson(int rotation, int selected, int target);
 
 #endif //MRJACK_MAP_H
 

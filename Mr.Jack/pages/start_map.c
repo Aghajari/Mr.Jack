@@ -419,6 +419,7 @@ int start_map(int player1, int player2, int x, int y, int id, bool loadGame) {
             rounds[i].obj.rect.h = rh;
         }
         rounds[i].obj.clickListener = NULL;
+        rounds[i].obj.refresh = true;
         insert_image2(&rounds[i], pnl);
     }
 
@@ -437,6 +438,7 @@ int start_map(int player1, int player2, int x, int y, int id, bool loadGame) {
         c[i].obj.rect.w = w;
         c[i].obj.rect.h = h;
         c[i].obj.rect.y = i * h;
+        c[i].obj.refresh = true;
         insert_image2(&c[i], pnl);
     }
 
@@ -549,7 +551,7 @@ int start_map(int player1, int player2, int x, int y, int id, bool loadGame) {
     int textTop = redCard.obj.rect.y + redCard.obj.rect.h + 20;
     GUI_Label title = {
             .font = TTF_OpenFont("assets/FreeSans.ttf", 16),
-            .text = "Hello World :)",
+            .text = empty_string,
             .obj = {
                     .color = {.r = 242, .g = 255, .b = 0, .a = 255},
                     .rect = {.x = x0 + 10, .y = textTop, .w = SCREEN_WIDTH - x0 - 14, .h = 20},
@@ -560,7 +562,7 @@ int start_map(int player1, int player2, int x, int y, int id, bool loadGame) {
     textTop += 25;
     GUI_Label hint = {
             .font = TTF_OpenFont("assets/FreeSans.ttf", 16),
-            .text = "Hello World :)",
+            .text = empty_string,
             .obj = {
                     .color = {.r = 255, .g = 255, .b = 255, .a = 255},
                     .rect = {.x = title.obj.rect.x, .y = textTop, .w = title.obj.rect.w, .h = ability_rect.y - 8 -

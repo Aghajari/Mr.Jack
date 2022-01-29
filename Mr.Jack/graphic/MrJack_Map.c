@@ -819,7 +819,7 @@ void moveCharacter(int x1, int y1, int x2, int y2, int move, bool fromHome) {
                 else
                     break;
             }
-            if (len1 >= move || len1 == 0) {
+            if (len1 >= move || (len1 == 0 && w != start)) {
                 out[0] = out[1] = out[2] = out[3] = out[4] = -1;
                 return;
             } else {
@@ -1003,36 +1003,7 @@ bool isCharacterVisible(int character) {
 
     if (character != 4) {
         MapElement *johnWatson = &characters[3];
-        int n;
-        switch (johnWatson->rotation) {
-            case -30:
-                n = 4;
-                break;
-            case -90:
-                n = 0;
-                break;
-            case -150:
-                n = 2;
-                break;
-            case -210:
-                n = 3;
-                break;
-            case -270:
-                n = 1;
-                break;
-            case -330:
-                n = 5;
-                break;
-            default:
-                n = -1;
-                break;
-        }
-
-        if (mi[johnWatson->selected].connectedTo[n] != -1
-            && (mi[johnWatson->selected].connectedTo[n] == selected
-                || (!mi[mi[johnWatson->selected].connectedTo[n]].isHome
-                    && mi[mi[johnWatson->selected].connectedTo[n]].connectedTo[n] == selected)))
-            return true;
+        return isVisibleForWatson(johnWatson->rotation, getFinalElementSelectedIndex(johnWatson), selected);
     }
     return false;
 }
@@ -1061,5 +1032,45 @@ void safe_character(int id) {
         getCharacterElement(id)->isSafe = true;
         strcpy(getCharacterElement(id)->name, findCharacter(id)->circleSafe);
         getCharacterElement(id)->refresh = true;
+    }
+}
+
+bool isVisibleForWatson(int rotation, int selected, int target) {
+    if (target == selected)
+        return false;
+
+    int n;
+    switch (rotation) {
+        case -30:
+            n = 4;
+            break;
+        case -90:
+            n = 0;
+            break;
+        case -150:
+            n = 2;
+            break;
+        case -210:
+            n = 3;
+            break;
+        case -270:
+            n = 1;
+            break;
+        case -330:
+            n = 5;
+            break;
+        default:
+            return false;
+    }
+
+    Whitechapel *whitechapel = &mi[selected];
+    while (1) {
+        int connected = whitechapel->connectedTo[n];
+        if (connected == target)
+            return true;
+        else if (connected == -1 || mi[connected].isHome || mi[connected].isLight)
+            return false;
+        else
+            whitechapel = &mi[connected];
     }
 }
