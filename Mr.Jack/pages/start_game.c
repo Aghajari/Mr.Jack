@@ -8,10 +8,10 @@
 #include "../linked_list/linked_list.h"
 #include "../audio/audio.h"
 
-#define INITIAL_X 200
-#define INITIAL_Y 200
-#define SCREEN_WIDTH 1000
-#define SCREEN_HEIGHT 700
+#define INITIAL_X 80
+#define INITIAL_Y 80
+#define SCREEN_WIDTH 1300
+#define SCREEN_HEIGHT 720
 
 void choiceListener(const void *target);
 
