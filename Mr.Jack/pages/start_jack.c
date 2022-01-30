@@ -7,8 +7,8 @@
 #include "../graphic/GUI_gravity.h"
 #include "../characters/characters.h"
 
-#define SCREEN_WIDTH 1000
-#define SCREEN_HEIGHT 700
+#define SCREEN_WIDTH 1300
+#define SCREEN_HEIGHT 720
 
 bool reveal = false, startGameNow;
 
