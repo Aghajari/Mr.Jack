@@ -14,12 +14,15 @@ The graphics of the program are written using the [SDL2](https://www.libsdl.org/
 And [A simple SDL2 audio library without SDL_Mixer](https://github.com/jakebesworth/Simple-SDL2-Audio)<br>
 AI of the game written with the help of [Monte-Carlo Tree Search for the Mr Jack Board Game](https://www.researchgate.net/publication/276779017_Monte-Carlo_Tree_Search_for_the_Mr_Jack_Board_Game)
 
+[Watch Gameplay](./Gameplay/gameplay.mp4)
+<br>
+[Watch AI Gameplay](./Gameplay/AI_gameplay.mp4)
+
 ## Rules
 [Read Mr. Jack Rulebook](https://cdn.1j1ju.com/medias/42/36/31-mr-jack-rulebook.pdf)
 
-
 - Call for Witnesses and deeming characters to be innocent is done automatically by the app
-- You can play with AI of the game
+- You can play with AI of the game 
 - Press CTRL+X on choosing side page and let the AI play with AI and enjoy :D
 - Press CTRL+Z to undo your move when you're playing game with AI
 
