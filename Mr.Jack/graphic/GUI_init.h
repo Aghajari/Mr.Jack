@@ -5,8 +5,8 @@
 #ifndef GUI_INIT_H
 #define GUI_INIT_H
 #include <SDL2/SDL.h>
-#include <SDL2_ttf/SDL_ttf.h>
-#include <SDL2_image/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_image.h>
 #include <stdbool.h>
 
 #define is_in_area(x, y, x1, x2, y1, y2) ((x) >= (x1) && (x) <= (x2) && (y) >= (y1) && (y) <= (y2))
@@ -15,6 +15,7 @@ typedef struct {
     void *obj, *element;
     int (*event)(), (*render)();
     bool isPanel;
+    bool removeRequested;
 } GUI_OBJECT_POINTER;
 
 typedef struct {

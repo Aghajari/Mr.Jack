@@ -177,6 +177,13 @@ int linked_list_removeData(struct LinkedListNode *_Nullable list, const void *_N
 */
 int linked_list_removeNode(struct LinkedListNode *_Nullable list, struct LinkedListNode *_Nullable data);
 
+
+/*
+* Removes and frees the next of given parent item in the ui_list.
+* @return 1 If the operation was performed, 0 otherwise
+*/
+int linked_list_remove_next_of(struct LinkedListNode *_Nullable list, struct LinkedListNode *_Nullable parent);
+
 /*
 * Removes and frees the elements at the specified position range in the ui_list.
 * Shifts any subsequent elements to the left (subtracts one from their indices).

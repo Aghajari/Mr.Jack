@@ -20,7 +20,9 @@ int element_finder(struct LinkedListNode *node, int index, const void *target) {
 }
 
 void remove_element2(const void *target, struct LinkedListNode *l) {
-    linked_list_remove(l, target, element_finder);
+    const struct LinkedListNode *lazyRemoveNode = linked_list_find(l, target, element_finder);
+    if (lazyRemoveNode != NULL && lazyRemoveNode->data != NULL)
+        ((GUI_OBJECT_POINTER *) lazyRemoveNode->data)->removeRequested = true;
 
     if (l == NULL || l->next == NULL)
         return;
@@ -40,11 +42,22 @@ void draw_for_all2(SDL_Renderer *r, struct LinkedListNode *l) {
     if (l == NULL || l->next == NULL)
         return;
 
-    for (struct LinkedListNode *cur = l->next; cur != NULL; cur = cur->next) {
+    struct LinkedListNode *parent = l;
+    struct LinkedListNode *cur = l->next;
+
+    while (cur != NULL) {
         GUI_OBJECT_POINTER *obj = cur->data;
 
         if (obj->render != NULL)
             obj->render(obj->element, r);
+
+        if (obj->removeRequested) {
+            linked_list_remove_next_of(l, parent);
+            cur = parent->next;
+        } else {
+            parent = cur;
+            cur = cur->next;
+        }
     }
 }
 
@@ -156,6 +169,7 @@ void insert_button2(GUI_Button *button, GUI_Panel *panel) {
     pointer->event = event;
     pointer->render = render_button;
     pointer->isPanel = false;
+    pointer->removeRequested = false;
     linked_list_append(linked_list_new(pointer), panel == NULL ? ui_list : panel->childs);
 }
 
@@ -220,7 +234,8 @@ int render_label(GUI_Label *lbl, SDL_Renderer *r) {
         return -1;
 
     if (lbl->obj.surface == NULL) {
-        lbl->obj.surface = TTF_RenderText_Blended_Wrapped(lbl->font, lbl->text, *(find_color(&lbl->obj)), lbl->obj.rect.w - 8);
+        lbl->obj.surface = TTF_RenderText_Blended_Wrapped(lbl->font, lbl->text, *(find_color(&lbl->obj)),
+                                                          lbl->obj.rect.w - 8);
         lbl->obj.texture = SDL_CreateTextureFromSurface(r, lbl->obj.surface);
     }
 
@@ -249,6 +264,7 @@ void insert_label2(GUI_Label *label, GUI_Panel *panel) {
     pointer->event = event;
     pointer->render = render_label;
     pointer->isPanel = false;
+    pointer->removeRequested = false;
     linked_list_append(linked_list_new(pointer), panel == NULL ? ui_list : panel->childs);
 }
 
@@ -322,6 +338,7 @@ void insert_fade_label2(GUI_FadeLabel *label, GUI_Panel *panel) {
     pointer->event = event;
     pointer->render = render_fade_label;
     pointer->isPanel = false;
+    pointer->removeRequested = false;
     linked_list_append(linked_list_new(pointer), panel == NULL ? ui_list : panel->childs);
 }
 
@@ -364,6 +381,7 @@ void insert_image2(GUI_Image *img, GUI_Panel *panel) {
     pointer->event = event;
     pointer->render = render_image;
     pointer->isPanel = false;
+    pointer->removeRequested = false;
     linked_list_append(linked_list_new(pointer), panel == NULL ? ui_list : panel->childs);
 }
 
@@ -379,9 +397,14 @@ int render_fadein_image_rotation(GUI_FadeInImage *img, SDL_Renderer *r, int rota
     }
 
     IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
-    SDL_Surface *surface = img->obj.surface != NULL ? img->obj.surface : IMG_Load(
-            (img->selected && img->selectedFile != NULL) ? img->selectedFile :
-            ((img->obj.event.hover && img->hoverFile != NULL) ? img->hoverFile : img->file));
+    SDL_Surface *surface = img->obj.surface != NULL
+                               ? img->obj.surface
+                               : IMG_Load(
+                                   (img->selected && img->selectedFile != NULL)
+                                       ? img->selectedFile
+                                       : ((img->obj.event.hover && img->hoverFile != NULL)
+                                              ? img->hoverFile
+                                              : img->file));
     if (img->selectedFile == NULL && img->hoverFile == NULL && img->obj.surface == NULL) {
         img->obj.surface = surface;
     }
@@ -443,6 +466,7 @@ void insert_fadein_image2(GUI_FadeInImage *img, GUI_Panel *panel) {
     pointer->event = event;
     pointer->render = render_fadein_image;
     pointer->isPanel = false;
+    pointer->removeRequested = false;
     linked_list_append(linked_list_new(pointer), panel == NULL ? ui_list : panel->childs);
 }
 
@@ -517,6 +541,7 @@ void insert_rain2(GUI_RainImage *img, GUI_Panel *panel) {
     pointer->element = img;
     pointer->render = render_rain;
     pointer->isPanel = false;
+    pointer->removeRequested = false;
     linked_list_append(linked_list_new(pointer), panel == NULL ? ui_list : panel->childs);
 }
 
@@ -601,6 +626,7 @@ void insert_fade_image2(GUI_FadeImage *img, GUI_Panel *panel) {
     pointer->event = event;
     pointer->render = render_fade_image;
     pointer->isPanel = false;
+    pointer->removeRequested = false;
     linked_list_append(linked_list_new(pointer), panel == NULL ? ui_list : panel->childs);
 }
 
@@ -657,6 +683,7 @@ void insert_fade_rect2(GUI_FadeRect *rect, GUI_Panel *panel) {
     pointer->event = event;
     pointer->render = render_fade_rect;
     pointer->isPanel = false;
+    pointer->removeRequested = false;
     linked_list_append(linked_list_new(pointer), panel == NULL ? ui_list : panel->childs);
 }
 
@@ -679,7 +706,7 @@ int render_panel(GUI_Panel *pnl, SDL_Renderer *r) {
 }
 
 GUI_Panel *create_panel() {
-    return create_panel2((GUI_OBJECT) {});
+    return create_panel2((GUI_OBJECT){});
 }
 
 GUI_Panel *create_panel2(GUI_OBJECT object) {
@@ -710,6 +737,7 @@ void insert_panel2(GUI_Panel *pnl, GUI_Panel *panel) {
     pointer->event = event_panel;
     pointer->render = render_panel;
     pointer->isPanel = true;
+    pointer->removeRequested = false;
     linked_list_append(linked_list_new(pointer), panel == NULL ? ui_list : panel->childs);
 }
 

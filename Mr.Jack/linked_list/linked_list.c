@@ -392,7 +392,6 @@ void __delete_first_element(struct LinkedListNode *list) {
 
 int linked_list_remove(struct LinkedListNode *list, const void *target,
                        int (*_Nonnull _finder)(struct LinkedListNode *, int, const void *)) {
-
     int result = 1;
     struct LinkedListNode *item = __linked_list_findParent__(list, &result, target, _finder);
     if (item == NULL)
@@ -401,14 +400,27 @@ int linked_list_remove(struct LinkedListNode *list, const void *target,
     if (result <= 0) {
         __delete_first_element(list);
     } else {
-        if (item->next == NULL)
+        linked_list_remove_next_of(list, item);
+    }
+
+    return 1;
+}
+
+int linked_list_remove_next_of(
+    struct LinkedListNode *list,
+    struct LinkedListNode *parent
+) {
+    if (parent == NULL) {
+        __delete_first_element(list);
+    } else {
+        if (parent->next == NULL)
             return 0;
 
-        struct LinkedListNode *next = item->next->next;
-        if (free_data && item->data != NULL)
-            free(item->next->data);
-        free(item->next);
-        item->next = next;
+        struct LinkedListNode *next = parent->next->next;
+        if (free_data && parent->data != NULL)
+            free(parent->next->data);
+        free(parent->next);
+        parent->next = next;
     }
 
     return 1;
